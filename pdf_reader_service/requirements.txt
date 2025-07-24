@@ -4,3 +4,4 @@ uvicorn[standard]
 PyMuPDF
 google-cloud-aiplatform
 google-generativeai
+python-multipart

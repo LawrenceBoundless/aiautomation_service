@@ -1,4 +1,3 @@
-# app/main.py
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from . import verifier
 
@@ -9,7 +8,7 @@ app = FastAPI(
 
 @app.post("/verify-pdf/")
 async def verify_pdf(
-    prompt: str = Form(...), 
+    prompt: str = Form(...),
     file: UploadFile = File(...)
 ):
     """
@@ -23,7 +22,7 @@ async def verify_pdf(
 
     try:
         pdf_content = await file.read()
-        
+
         # 1. Extract text from the PDF
         document_text = verifier.extract_text_from_pdf(pdf_content)
         if not document_text:
