@@ -1,0 +1,6 @@
+# requirements.txt
+fastapi
+uvicorn[standard]
+PyMuPDF
+google-cloud-aiplatform
+google-generativeai
