@@ -1,10 +1,10 @@
 import os
 import fitz  # PyMuPDF
 import vertexai
-from vertexai.generative_models import GenerativeModel, Part
+from vertexai.generative_models import GenerativeModel
 
 def extract_text_from_pdf(pdf_file: bytes) -> str:
-    """Extracts all text from a PDF file."""
+    """Extracts all text from a PDF file for AI analysis."""
     try:
         doc = fitz.open(stream=pdf_file, filetype="pdf")
         text = ""
@@ -31,8 +31,9 @@ def analyze_document_with_gemini(document_text: str, prompt: str) -> str:
         # Initialize the Vertex AI client
         vertexai.init(project=project_id, location=location)
 
-        # Load the Gemini 1.5 Pro model
-        model = GenerativeModel("gemini-1.5-pro-preview-0409")
+        # NOTE: Replace with a model name confirmed to be available in your project/region
+        # You can find this by running `gcloud ai models list --region=[your-region]`
+        model = GenerativeModel("gemini-1.5-pro-preview-0409") 
 
         full_prompt = f"{prompt}\n\n---DOCUMENT TEXT---\n{document_text}"
 
