@@ -1,6 +1,7 @@
 import os
 import fitz  # PyMuPDF
-import google.generativeai as genai
+import vertexai
+from vertexai.generative_models import GenerativeModel, Part
 
 def extract_text_from_pdf(pdf_file: bytes) -> str:
     """Extracts all text from a PDF file."""
@@ -16,9 +17,8 @@ def extract_text_from_pdf(pdf_file: bytes) -> str:
         return ""
 
 def analyze_document_with_gemini(document_text: str, prompt: str) -> str:
-    """Analyzes the extracted document text using Gemini Pro."""
+    """Analyzes the extracted document text using the Vertex AI Gemini Pro model."""
 
-    # Get configuration from environment variables set by Cloud Run
     project_id = os.environ.get('GCP_PROJECT_ID')
     location = os.environ.get('GCP_LOCATION')
 
@@ -28,15 +28,18 @@ def analyze_document_with_gemini(document_text: str, prompt: str) -> str:
         return error_message
 
     try:
+        # Initialize the Vertex AI client
+        vertexai.init(project=project_id, location=location)
 
-        # Initialize the model
-        model = genai.GenerativeModel('gemini-1.5-pro-preview-0409')
+        # Load the Gemini 1.5 Pro model
+        model = GenerativeModel("gemini-1.5-pro-preview-0409")
 
         full_prompt = f"{prompt}\n\n---DOCUMENT TEXT---\n{document_text}"
 
+        # Generate content
         response = model.generate_content(full_prompt)
         return response.text
     except Exception as e:
-        error_message = f"Error during Gemini API call: {e}"
+        error_message = f"Error during Vertex AI API call: {e}"
         print(error_message)
         return error_message
