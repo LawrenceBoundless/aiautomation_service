@@ -1,4 +1,4 @@
-# requirements.txt
+# pdf_reader_service/requirements.txt
 fastapi
 uvicorn[standard]
 PyMuPDF

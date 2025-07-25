@@ -1,0 +1,44 @@
+swagger: '2.0'
+info:
+  title: 'aiauto-macroservice-api'
+  description: 'Secure entry point for the AI Automation Macroservice'
+  version: '1.0.0'
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  # Path for Slack (no API key, uses signature verification)
+  /slack/command:
+    post:
+      summary: 'Handles incoming slash commands from the aiauto Slack app'
+      operationId: 'slackCommand'
+      x-google-backend:
+        # IMPORTANT: This will be the URL of THIS apigateway-service after deployment
+        address: https://apigateway-service-xxxxxxxx-uc.a.run.app/slack/events
+        protocol: 'h2'
+      responses:
+        '200':
+          description: 'Request acknowledged.'
+
+  # Path for other clients (n8n, websites, etc.) secured by an API key
+  /v1/run-checks:
+    post:
+      summary: 'Runs programmatic checks on a PDF for authorized clients'
+      operationId: 'runProgrammaticChecks'
+      x-google-backend:
+        address: https://apigateway-service-xxxxxxxx-uc.a.run.app/api/v1/run-checks
+        protocol: 'h2'
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: 'Successfully returned check results.'
+        '401':
+          description: 'Unauthorized. API key is missing or invalid.'
+
+securityDefinitions:
+  api_key:
+    type: 'apiKey'
+    name: 'x-api-key'
+    in: 'header'
