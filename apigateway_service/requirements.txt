@@ -1,3 +1,4 @@
+# apigateway_service/requirements.txt
 fastapi
 uvicorn[standard]
 python-multipart

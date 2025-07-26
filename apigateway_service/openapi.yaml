@@ -15,7 +15,7 @@ paths:
       operationId: 'slackCommand'
       x-google-backend:
         # IMPORTANT: This will be the URL of THIS apigateway-service after deployment
-        address: https://apigateway-service-xxxxxxxx-uc.a.run.app/slack/events
+        address: https://apigateway-service-380295747842.us-central1.run.app/slack/events
         protocol: 'h2'
       responses:
         '200':
@@ -27,7 +27,7 @@ paths:
       summary: 'Runs programmatic checks on a PDF for authorized clients'
       operationId: 'runProgrammaticChecks'
       x-google-backend:
-        address: https://apigateway-service-xxxxxxxx-uc.a.run.app/api/v1/run-checks
+        address: https://apigateway-service-380295747842.us-central1.run.app/api/v1/run-checks
         protocol: 'h2'
       security:
         - api_key: []
